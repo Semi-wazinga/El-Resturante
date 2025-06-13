@@ -1,0 +1,48 @@
+.homeCarouselBackground {
+  background: linear-gradient(to right, #008585 50%, white 50%);
+  height: auto;
+  display: flex;
+}
+
+.homeCarouselDescription {
+  margin: 150px auto;
+}
+
+.carouselImage {
+  width: 30%;
+  border-radius: 25%;
+  margin: 100px 40%;
+}
+
+.hero p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 50% auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  padding-bottom: 2rem;
+}
+
+.hero {
+  background-color: #74a892;
+  clip-path: polygon(0 0%, 100% 0%, 100% 90%, 0% 100%);
+}
+
+.card {
+  margin: 0 auto !important;
+  width: 160px !important;
+}
+
+.flex-background {
+  background-color: white;
+  width: 200px;
+}
+
+.footer {
+  background-color: #008585;
+  clip-path: polygon(0 0%, 100% 30%, 100% 100%, 0% 100%);
+}

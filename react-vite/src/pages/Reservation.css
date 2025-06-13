@@ -1,0 +1,88 @@
+.reservation-form,
+.reservation-space {
+  background-color: #74a892;
+}
+
+.reservation-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.reservation-text h1 {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  margin-top: 5rem;
+  color: #e7ab08;
+}
+.reservation-text p {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 1.2rem;
+  width: 70%; /* Adjust the width as needed */
+  margin: 0 auto; /* Centers the element horizontally */
+  text-align: center; /* Centers the text inside the paragraph */
+  color: #e2ddce;
+}
+
+.reservation-arrow {
+  font-size: 40px;
+  color: #e7ab08;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* .reservation-description {
+} */
+
+.reservation-description h3 {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  color: #e7ab08;
+  padding-top: 60px;
+  font-size: larger;
+  font-weight: 500;
+  letter-spacing: 3px;
+  line-height: 2rem;
+  width: 60%; /* Adjust the width as needed */
+  margin: 0 auto; /* Centers the element horizontally */
+  text-align: center; /* Centers the text inside the paragraph */
+}
+
+.reservation-form {
+  max-width: 100%;
+}
+
+.reservation-form .form {
+  width: 100%;
+}
+
+.form-details {
+  width: 400px;
+  border: 1px solid white;
+  padding: 20px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.faded-line {
+  height: 1px; /* Thickness of the line */
+  background: linear-gradient(
+    to right,
+    rgba(188, 130, 21, 0.1),
+    rgba(194, 113, 26, 0.708),
+    rgba(219, 140, 13, 0.1)
+  ); /* Faded effect */
+  width: 100%; /* Full width of the screen */
+  /* padding: 1px 0; Optional: Adds space above and below the line */
+}
+
+.footer-column {
+  display: flex;
+  gap: 0.3rem;
+  justify-content: space-around;
+  align-items: center;
+}

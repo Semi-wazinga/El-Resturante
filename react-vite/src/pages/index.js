@@ -1,0 +1,6 @@
+export {default as Home} from './Home'
+export {default as Menu} from './Menu'
+export {default as Reservation} from './Reservation'
+export {default as About} from './About'
+export {default as OrderPage} from './OrderPage'
+export {default as MealOrder} from './MealOrder'

@@ -1,0 +1,32 @@
+.rightside {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.btn {
+  background-color: #d49726;
+  color: black;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight:normal;
+  transition: background-color 0.3s ease;
+  /* border: none; */
+}
+.btn:hover{ 
+  background-color: #b88600; 
+  color: white;
+  cursor: pointer;
+ }  

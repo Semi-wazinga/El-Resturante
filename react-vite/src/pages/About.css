@@ -1,0 +1,48 @@
+.about h1,
+h3 {
+  color: #d49726;
+}
+
+.circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.439);
+  margin: 0 auto;
+}
+
+.faded-white {
+  height: 1px; /* Thickness of the line */
+  background-color: white;
+}
+
+.inside-div {
+  justify-content: center;
+  align-items: center;
+  margin: 55px auto;
+}
+
+.description {
+  width: 100%;
+  display: flex; /* Use flexbox for layout */
+  justify-content: flex-end; /* Align items to the right */
+  align-items: center; /* Center items vertically */
+}
+
+.description-text {
+  text-align: right; /* Align text to the right */
+  width: 50%; /* Set width to 50% of the parent container */
+}
+
+.review-header {
+  color: #d49726;
+}
+
+.about-footer {
+  background-color: #008585;
+}
+
+.link {
+  text-decoration: none;
+  all: unset;
+}
