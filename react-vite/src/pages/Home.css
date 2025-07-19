@@ -32,9 +32,9 @@
   clip-path: polygon(0 0%, 100% 0%, 100% 90%, 0% 100%);
 }
 
-.card {
+.card-box {
   margin: 0 auto !important;
-  width: 160px !important;
+  width: 160px;
 }
 
 .flex-background {

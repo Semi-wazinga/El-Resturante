@@ -1,14 +1,21 @@
-import { React, useState, useEffect } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import Image from "react-bootstrap/Image";
-import Carousel from "react-bootstrap/Carousel";
+import { useState, useEffect } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Image,
+  Carousel,
+  Card,
+} from "react-bootstrap";
+import { useMenu } from "../../context/MenuContext";
 import "./Menu.css";
-import { Category } from "../../components/Category";
+// import { Category } from "../../components/Category";
 
 const Menu = () => {
+  const { menuItems } = useMenu();
+  console.log("Client menu items:", menuItems);
+
   const URL1 =
     "https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken_breast";
   const URL2 = "https://www.themealdb.com/api/json/v1/1/search.php?s=burger";
@@ -18,7 +25,7 @@ const Menu = () => {
   const [burgerRecipe, setBurgerRecipe] = useState("");
 
   const [recipes, setRecipes] = useState([]);
-  const [showRecipe, setShowRecipe] = useState(0);
+  // const [showRecipe, setShowRecipe] = useState(0);
 
   useEffect(() => {
     const fetchChickenRecipe = async () => {
@@ -26,7 +33,6 @@ const Menu = () => {
         const response = await fetch(URL1);
         const data = await response.json();
         setChickenRecipe(data.meals[0]);
-        console.log(data);
       } catch (error) {
         console.error(error);
       }
@@ -40,7 +46,6 @@ const Menu = () => {
         const response = await fetch(URL2);
         const data = await response.json();
         setBurgerRecipe(data.meals[0]);
-        console.log(data);
       } catch (error) {
         console.error(error);
       }
@@ -54,7 +59,6 @@ const Menu = () => {
         const response = await fetch(URL3);
         const data = await response.json();
         setRecipes(data.meals.slice(0, 9));
-        console.log(data.meals.slice(0, 9));
       } catch (error) {
         console.error(error);
       }
@@ -154,7 +158,37 @@ const Menu = () => {
         </Carousel>
       </Container>
 
-      <Category />
+      {/* <Category /> */}
+      <Container className='mt-3'>
+        <Row>
+          {menuItems.length === 0 ? (
+            <p>No items displayed yet</p>
+          ) : (
+            menuItems.map((item, index) => (
+              <Col md={4} sm={6} xs={12} key={index} className='mb-4'>
+                <Card>
+                  {item.image && (
+                    <Card.Img
+                      variant='top'
+                      src={item.image}
+                      style={{ height: "200px", objectFit: "cover" }}
+                      alt={item.item}
+                    />
+                  )}
+                  <Card.Body>
+                    <Card.Title>{item.item}</Card.Title>
+                    <Card.Text>
+                      <strong>Category:</strong> {item.category} <br />
+                      <strong>Price:</strong> $
+                      {parseFloat(item.price).toFixed(2)}
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))
+          )}
+        </Row>
+      </Container>
     </>
   );
 };

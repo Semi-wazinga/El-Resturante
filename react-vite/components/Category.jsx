@@ -8,7 +8,8 @@ import "./Category.css";
 
 export const Category = () => {
   const URL_CATEGORY = "https://www.themealdb.com/api/json/v1/1/categories.php";
-  const URL_RECIPES = "https://www.themealdb.com/api/json/v1/1/filter.php?c=";
+  const URL_RECIPES =
+    "https://www.themealdb.com/api/json/v1/1/filter.php?c=Seafood";
 
   const [categories, setCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState("");
@@ -73,7 +74,7 @@ export const Category = () => {
         <Row xs={2} sm={3} md={4} lg={6} className='g-5'>
           {recipes.map((recipe) => (
             <Col key={recipe.idMeal}>
-              <Card className='text-center card'>
+              <Card className='text-center card-box'>
                 <Card.Img
                   variant='top'
                   src={recipe.strMealThumb}

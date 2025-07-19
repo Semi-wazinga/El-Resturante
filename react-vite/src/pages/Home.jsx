@@ -101,7 +101,7 @@ const Home = () => {
         <Row xs={2} md={2} lg={4}>
           {items.map((item, index) => (
             <Col key={index}>
-              <Card className='card just border-0'>
+              <Card className='card-box just border-0'>
                 <Card.Img className='img' variant='top' src={item.image} />
                 <Card.Body>
                   <Card.Text>{item.realname}</Card.Text>

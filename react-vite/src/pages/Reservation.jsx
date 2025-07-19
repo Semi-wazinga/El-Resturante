@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import "./Reservation.css";
 import Container from "react-bootstrap/esm/Container";
 import Button from "react-bootstrap/Button";
@@ -13,11 +13,14 @@ import {
   FaInstagram,
   FaTiktok,
 } from "react-icons/fa6";
+import { useReservations } from "../../context/ReservationContext";
 
 const Reservation = () => {
-  const [inputs, setInputs] = React.useState({
+  const { reservations, setReservations } = useReservations();
+
+  const [inputs, setInputs] = useState({
     name: "",
-    surname: "",
+    // surname: "",
     phone: "",
     email: "",
     guests: "",
@@ -34,23 +37,21 @@ const Reservation = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission logic here
-    console.log(inputs);
+    console.log("submitting reservations", inputs);
+    setReservations([...reservations, inputs]);
+
+    alert("reservation submitted");
 
     // Reset the form after submission
     setInputs({
       name: "",
-      surname: "",
+      // surname: "",
       phone: "",
       email: "",
-      guests: "",
+      guests: 1,
       date: "",
       time: "",
     });
-  };
-
-  const handleClick = () => {
-    // Handle button click logic here
-    alert("Button clicked!");
   };
 
   const reservationImage = images.ingredients; // Change this to the desired image for the reservation page
@@ -112,30 +113,18 @@ const Reservation = () => {
                     />
                   </Form.Group>
 
-                  <Form.Group as={Col} controlId='formGridSurname'>
-                    <Form.Label>Surname</Form.Label>
+                  <Form.Group as={Col} controlId='formGridPhone'>
+                    <Form.Label>Phone</Form.Label>
                     <Form.Control
-                      type='Surname'
-                      name='surname'
-                      value={inputs.surname}
+                      type='tel'
+                      name='phone'
+                      value={inputs.phone}
                       onChange={handleChange}
-                      placeholder='Surname'
+                      placeholder='+234 ...'
                       required
                     />
                   </Form.Group>
                 </Row>
-
-                <Form.Group className='mb-3' controlId='formGridPhone'>
-                  <Form.Label>Phone</Form.Label>
-                  <Form.Control
-                    type='tel'
-                    name='phone'
-                    value={inputs.phone}
-                    onChange={handleChange}
-                    placeholder='+234 ...'
-                    required
-                  />
-                </Form.Group>
 
                 <Form.Group className='mb-3' controlId='formGridEmail'>
                   <Form.Label>Email</Form.Label>
@@ -152,11 +141,12 @@ const Reservation = () => {
                 <Form.Group className='mb-3' controlId='formGridGuests'>
                   <Form.Label>Guests</Form.Label>
                   <Form.Control
-                    type='Guests'
+                    type='number'
                     name='guests'
                     value={inputs.guests}
                     onChange={handleChange}
                     placeholder='Guests'
+                    min={1}
                     required
                   />
                 </Form.Group>
@@ -187,7 +177,7 @@ const Reservation = () => {
                   </Form.Group>
                 </Row>
                 <div className='d-grid mb-3'>
-                  <Button variant='primary' onClick={handleClick} type='submit'>
+                  <Button variant='primary' type='submit'>
                     Submit
                   </Button>
                 </div>

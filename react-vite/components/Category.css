@@ -5,7 +5,7 @@
   align-items: center;
 }
 
-.card {
+.card-box {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,12 +21,12 @@
   border-radius: 5px;
   text-decoration: none;
   font-size: 16px;
-  font-weight:normal;
+  font-weight: normal;
   transition: background-color 0.3s ease;
   /* border: none; */
 }
-.btn:hover{ 
-  background-color: #b88600; 
+.btn:hover {
+  background-color: #b88600;
   color: white;
   cursor: pointer;
- }  
+}
