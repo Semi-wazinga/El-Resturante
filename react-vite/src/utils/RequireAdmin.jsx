@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 
-const RequireAuth = ({ children }) => {
+const RequireAdmin = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -13,8 +13,8 @@ const RequireAuth = ({ children }) => {
           withCredentials: true, // send cookies
         });
 
-        if (res.data.user?.role === "customer") {
-          setIsAuthenticated(true);
+        if (res.data.user?.role === "admin") {
+          setIsAdmin(true);
         }
       } catch (err) {
         console.error("Auth check failed:", err.response?.data || err.message);
@@ -28,7 +28,7 @@ const RequireAuth = ({ children }) => {
 
   if (loading) return <p>Checking authentication...</p>;
 
-  return isAuthenticated ? children : <Navigate to='/login' replace />;
+  return isAdmin ? children : <Navigate to='/login' replace />;
 };
 
-export default RequireAuth;
+export default RequireAdmin;

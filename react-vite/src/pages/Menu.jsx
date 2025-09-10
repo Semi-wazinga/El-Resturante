@@ -10,7 +10,6 @@ import {
 } from "react-bootstrap";
 import { useMenu } from "../../context/MenuContext";
 import "./Menu.css";
-// import { Category } from "../../components/Category";
 
 const Menu = () => {
   const { menuItems } = useMenu();
@@ -158,7 +157,7 @@ const Menu = () => {
         </Carousel>
       </Container>
 
-      {/* <Category /> */}
+      {/* Our Menu from backend */}
       <Container className='mt-3'>
         <Row>
           {menuItems.length === 0 ? (
@@ -168,15 +167,16 @@ const Menu = () => {
               <Col md={4} sm={6} xs={12} key={index} className='mb-4'>
                 <Card>
                   {item.image && (
+                    // console.log("Menu item image:", `${API_BASE}${item.image}`);
                     <Card.Img
                       variant='top'
                       src={item.image}
                       style={{ height: "200px", objectFit: "cover" }}
-                      alt={item.item}
+                      alt={item.name}
                     />
                   )}
                   <Card.Body>
-                    <Card.Title>{item.item}</Card.Title>
+                    <Card.Title>{item.name}</Card.Title>
                     <Card.Text>
                       <strong>Category:</strong> {item.category} <br />
                       <strong>Price:</strong> $

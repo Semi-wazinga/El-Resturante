@@ -13,19 +13,20 @@ import {
   FaInstagram,
   FaTiktok,
 } from "react-icons/fa6";
-import { useReservations } from "../../context/ReservationContext";
+import { useNavigate } from "react-router-dom";
+import { useCustomerReservations } from "../../context/CustomerReservationContext";
 
 const Reservation = () => {
-  const { reservations, setReservations } = useReservations();
+  const { addReservation } = useCustomerReservations();
+
+  const navigate = useNavigate();
 
   const [inputs, setInputs] = useState({
     name: "",
-    // surname: "",
     phone: "",
-    email: "",
-    guests: "",
     date: "",
     time: "",
+    guestSize: "",
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,24 +35,21 @@ const Reservation = () => {
       [name]: value,
     }));
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log("submitting reservations", inputs);
-    setReservations([...reservations, inputs]);
-
-    alert("reservation submitted");
-
-    // Reset the form after submission
-    setInputs({
-      name: "",
-      // surname: "",
-      phone: "",
-      email: "",
-      guests: 1,
-      date: "",
-      time: "",
-    });
+    try {
+      await addReservation(inputs);
+      navigate("/reservation-confirmed");
+      setInputs({
+        name: "",
+        phone: "",
+        guestSize: 1,
+        date: "",
+        time: "",
+      });
+    } catch (err) {
+      console.error("Reservation failed:", err);
+    }
   };
 
   const reservationImage = images.ingredients; // Change this to the desired image for the reservation page
@@ -126,7 +124,7 @@ const Reservation = () => {
                   </Form.Group>
                 </Row>
 
-                <Form.Group className='mb-3' controlId='formGridEmail'>
+                {/* <Form.Group className='mb-3' controlId='formGridEmail'>
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     type='Email'
@@ -136,14 +134,14 @@ const Reservation = () => {
                     placeholder='Email'
                     required
                   />
-                </Form.Group>
+                </Form.Group> */}
 
                 <Form.Group className='mb-3' controlId='formGridGuests'>
                   <Form.Label>Guests</Form.Label>
                   <Form.Control
                     type='number'
-                    name='guests'
-                    value={inputs.guests}
+                    name='guestSize'
+                    value={inputs.guestSize}
                     onChange={handleChange}
                     placeholder='Guests'
                     min={1}

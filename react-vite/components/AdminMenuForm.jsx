@@ -3,21 +3,16 @@ import { Table, Form, Button, Row, Col } from "react-bootstrap";
 import { useMenu } from "../context/MenuContext";
 
 const AdminMenuForm = () => {
-  const { menuItems, setMenuItems } = useMenu();
+  const { menuItems, updateMenuItem, deleteMenuItem } = useMenu();
   const [formData, setFormData] = useState({
-    item: "",
+    name: "",
     price: "",
     category: "",
-    image: "",
+    image: null,
   });
 
-  const [editIndex, setEditIndex] = useState(null);
+  const [editId, setEditId] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState("All");
-
-  // use effect for debugging
-  useEffect(() => {
-    console.log("✅ Saved to localStorage:", menuItems);
-  }, [menuItems]);
 
   const categories = [
     "All",
@@ -33,34 +28,41 @@ const AdminMenuForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.size > 2000 * 1024) {
+      // optional size check (1000KB here, adjust as needed)
+      alert("Image must be under 2000KB");
+      return;
+    }
+    setFormData({ ...formData, image: file }); // 👈 keep file
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newItem = { ...formData }; // Copy to prevent stale state issues
-    console.log("Submitting:", newItem);
-
-    if (editIndex !== null) {
-      const updated = [...menuItems];
-      updated[editIndex] = formData;
-      setMenuItems(updated);
-      setEditIndex(null); // exit null mode
+    if (editId) {
+      await updateMenuItem(editId, formData); //PUT request to backend
+      setEditId(null);
     } else {
-      setMenuItems([...menuItems, newItem]);
+      await addMenuItem(formData); //POST request to backend
     }
 
-    setFormData({ item: "", price: "", category: "", image: "" });
+    setFormData({ name: "", price: "", category: "", image: null });
   };
 
-  const handleEdit = (index) => {
-    setFormData(menuItems[index]);
-    setEditIndex(index);
+  const handleEdit = (item) => {
+    setFormData({
+      name: item.name,
+      price: item.price,
+      category: item.category,
+      image: null, // we don’t refill file input
+    });
+    setEditId(item._id);
   };
 
-  const handleDelete = (indexToDelete) => {
-    const updatedItems = menuItems.filter(
-      (_, index) => index !== indexToDelete
-    );
-    setMenuItems(updatedItems);
+  const handleDelete = async (id) => {
+    await deleteMenuItem(id); // DELETE request to backend
   };
 
   return (
@@ -73,8 +75,8 @@ const AdminMenuForm = () => {
                 <Form.Label>Item Name</Form.Label>
                 <Form.Control
                   type='text'
-                  name='item'
-                  value={formData.item}
+                  name='name'
+                  value={formData.name}
                   onChange={handleChange}
                   placeholder='e.g Chicken Burger'
                 />
@@ -94,7 +96,7 @@ const AdminMenuForm = () => {
             </Col>
             <Col>
               <Form.Group className='mb-3'>
-                <Form.Label>Categoty</Form.Label>
+                <Form.Label>Category</Form.Label>
                 <Form.Control
                   type='text'
                   name='category'
@@ -107,7 +109,7 @@ const AdminMenuForm = () => {
 
             <Col>
               <Button className='mt-4' type='submit'>
-                {editIndex !== null ? "update" : "submit"}
+                {editId ? "update" : "submit"}
               </Button>
             </Col>
 
@@ -117,25 +119,7 @@ const AdminMenuForm = () => {
                 <Form.Control
                   type='file'
                   accept='image/*'
-                  onChange={(e) => {
-                    const file = e.target.files[0];
-
-                    if (file.size > 100 * 1024) {
-                      alert("Image must be under 100KB");
-                      return;
-                    }
-
-                    if (file) {
-                      const reader = new FileReader();
-                      reader.onloadend = () => {
-                        setFormData((prevFormData) => ({
-                          ...prevFormData,
-                          image: reader.result,
-                        }));
-                      };
-                      reader.readAsDataURL(file); // ✅ This line is crucial
-                    }
-                  }}
+                  onChange={handleFileChange}
                 />
               </Form.Group>
             </Col>
@@ -176,14 +160,20 @@ const AdminMenuForm = () => {
               {filteredItems.map((entry, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{entry.item}</td>
+                  <td>{entry.name}</td>
                   <td>
                     {entry.image ? (
                       <img
                         src={entry.image}
                         alt='thumbnail'
                         height='40'
-                        style={{ objectFit: "cover", borderRadius: "4px" }}
+                        style={{
+                          height: "100px",
+                          width: "100px",
+                          objectFit: "cover",
+                          borderRadius: "8px",
+                          boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+                        }}
                       />
                     ) : (
                       "No image"
@@ -192,8 +182,10 @@ const AdminMenuForm = () => {
                   <td>${parseFloat(entry.price).toFixed(2)}</td>
                   <td>{entry.category}</td>
                   <td>
-                    <Button onClick={() => handleEdit(index)}>Edit</Button>
-                    <Button onClick={() => handleDelete(index)}>Delete</Button>
+                    <Button onClick={() => handleEdit(entry)}>Edit</Button>
+                    <Button onClick={() => handleDelete(entry._id)}>
+                      Delete
+                    </Button>
                   </td>
                 </tr>
               ))}
